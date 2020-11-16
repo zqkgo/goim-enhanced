@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/bilibili/discovery/naming"
-	"github.com/Terry-Mao/goim/internal/logic/model"
+	"github.com/zqkgo/goim-enhanced/internal/logic/model"
 )
 
 func TestWeightedNode(t *testing.T) {

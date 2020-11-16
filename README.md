@@ -1,1 +1,1 @@
-Based on [goim v2.0](https://github.com/Terry-Mao/goim), add stats ability to monitor runtime.
+Based on [goim v2.0](https://github.com/zqkgo/goim-enhanced), add stats ability to monitor runtime.

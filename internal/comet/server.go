@@ -5,10 +5,10 @@ import (
 	"math/rand"
 	"time"
 
-	logic "github.com/Terry-Mao/goim/api/logic/grpc"
-	"github.com/Terry-Mao/goim/internal/comet/conf"
 	log "github.com/golang/glog"
 	"github.com/zhenjl/cityhash"
+	logic "github.com/zqkgo/goim-enhanced/api/logic/grpc"
+	"github.com/zqkgo/goim-enhanced/internal/comet/conf"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/balancer/roundrobin"
 	"google.golang.org/grpc/keepalive"

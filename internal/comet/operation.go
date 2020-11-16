@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	model "github.com/Terry-Mao/goim/api/comet/grpc"
-	logic "github.com/Terry-Mao/goim/api/logic/grpc"
-	"github.com/Terry-Mao/goim/pkg/strings"
 	log "github.com/golang/glog"
+	model "github.com/zqkgo/goim-enhanced/api/comet/grpc"
+	logic "github.com/zqkgo/goim-enhanced/api/logic/grpc"
+	"github.com/zqkgo/goim-enhanced/pkg/strings"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/encoding/gzip"

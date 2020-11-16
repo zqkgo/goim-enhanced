@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	comet "github.com/Terry-Mao/goim/api/comet/grpc"
-	pb "github.com/Terry-Mao/goim/api/logic/grpc"
-	"github.com/Terry-Mao/goim/pkg/bytes"
 	log "github.com/golang/glog"
+	comet "github.com/zqkgo/goim-enhanced/api/comet/grpc"
+	pb "github.com/zqkgo/goim-enhanced/api/logic/grpc"
+	"github.com/zqkgo/goim-enhanced/pkg/bytes"
 )
 
 func (j *Job) push(ctx context.Context, pushMsg *pb.PushMsg) (err error) {

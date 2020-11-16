@@ -5,12 +5,13 @@ import (
 	"net"
 	"time"
 
-	pb "github.com/Terry-Mao/goim/api/logic/grpc"
-	"github.com/Terry-Mao/goim/internal/logic"
-	"github.com/Terry-Mao/goim/internal/logic/conf"
+	pb "github.com/zqkgo/goim-enhanced/api/logic/grpc"
+	"github.com/zqkgo/goim-enhanced/internal/logic"
+	"github.com/zqkgo/goim-enhanced/internal/logic/conf"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
+
 	// use gzip decoder
 	_ "google.golang.org/grpc/encoding/gzip"
 )
@@ -20,9 +21,9 @@ func New(c *conf.RPCServer, l *logic.Logic) *grpc.Server {
 	keepParams := grpc.KeepaliveParams(keepalive.ServerParameters{
 		MaxConnectionIdle:     time.Duration(c.IdleTimeout),
 		MaxConnectionAgeGrace: time.Duration(c.ForceCloseWait),
-		Time:             time.Duration(c.KeepAliveInterval),
-		Timeout:          time.Duration(c.KeepAliveTimeout),
-		MaxConnectionAge: time.Duration(c.MaxLifeTime),
+		Time:                  time.Duration(c.KeepAliveInterval),
+		Timeout:               time.Duration(c.KeepAliveTimeout),
+		MaxConnectionAge:      time.Duration(c.MaxLifeTime),
 	})
 	srv := grpc.NewServer(keepParams)
 	pb.RegisterLogicServer(srv, &server{l})

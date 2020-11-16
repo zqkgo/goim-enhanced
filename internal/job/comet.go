@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/bilibili/discovery/naming"
-	comet "github.com/Terry-Mao/goim/api/comet/grpc"
-	"github.com/Terry-Mao/goim/internal/job/conf"
+	comet "github.com/zqkgo/goim-enhanced/api/comet/grpc"
+	"github.com/zqkgo/goim-enhanced/internal/job/conf"
 
 	log "github.com/golang/glog"
 	"google.golang.org/grpc"
