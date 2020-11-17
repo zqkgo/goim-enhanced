@@ -113,3 +113,11 @@ func (s *server) Rooms(ctx context.Context, req *pb.RoomsReq) (*pb.RoomsReply, e
 	}
 	return &pb.RoomsReply{Rooms: roomIds}, nil
 }
+
+func (s *server) Onlines(ctx context.Context, req *pb.OnlinesReq) (*pb.OnlinesReply, error) {
+	return nil, nil
+}
+
+func (s *server) Messages(ctx context.Context, req *pb.MessagesReq) (*pb.MessagesReply, error) {
+	return nil, nil
+}

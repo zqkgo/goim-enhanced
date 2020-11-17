@@ -48,12 +48,29 @@ message RoomsReply {
     map<string,bool> rooms = 1;
 }
 
+message OnlinesReq {}
+
+message OnlinesReply {
+    uint64 hostOnline = 1;
+    map<string, uint64> roomOnlines = 2;
+    map<int64, uint64> midOnlines = 3;
+}
+
+message MessagesReq {}
+
+message MessagesReply {
+    uint64 all = 1;
+    uint64 mid = 2;
+    uint64 room = 3;
+    uint64 broadcast = 4;
+}
+
 service Comet { 
     // Ping Service 
     rpc Ping(Empty) returns(Empty); 
     // Close Service 
     rpc Close(Empty) returns(Empty); 
-    //PushMsg push by key or mid
+    // PushMsg push by key or mid
     rpc PushMsg(PushMsgReq) returns (PushMsgReply);
     // Broadcast send to every enrity
     rpc Broadcast(BroadcastReq) returns (BroadcastReply);
@@ -61,4 +78,8 @@ service Comet {
     rpc BroadcastRoom(BroadcastRoomReq) returns (BroadcastRoomReply);
     // Rooms get all rooms
     rpc Rooms(RoomsReq) returns (RoomsReply);
+    // Online stats
+    rpc Onlines(OnlinesReq) returns (OnlinesReply);
+    // Message stats
+    rpc Messages(MessagesReq) returns (MessagesReply);
 }
