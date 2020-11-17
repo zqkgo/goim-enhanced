@@ -7,6 +7,7 @@ github.com/Shopify/toxiproxy v2.1.4+incompatible h1:TKdv8HiTLgE5wdJuEML90aBgNWso
 github.com/Shopify/toxiproxy v2.1.4+incompatible/go.mod h1:OXgGpZ6Cli1/URJOF1DMxUHB2q5Ap20/P/eIdh4G0pI=
 github.com/bilibili/discovery v1.0.1 h1:6W9B2caxOdfBEKCMawwXU3dJ0W1TCONuprbXbkGe+s4=
 github.com/bilibili/discovery v1.0.1/go.mod h1:daS5nEYEBt0scrrmuoNCxWXDHFK6gtEpjhVKG6MUxUg=
+github.com/bsm/sarama-cluster v1.0.3 h1:EYUVzny7Ptwfci5V3zeKhhX0CruB5rkkI71lz70CXRM=
 github.com/bsm/sarama-cluster v2.1.15+incompatible h1:RkV6WiNRnqEEbp81druK8zYhmnIgdOjqSVi0+9Cnl2A=
 github.com/bsm/sarama-cluster v2.1.15+incompatible/go.mod h1:r7ao+4tTNXvWm+VRpRJchr2kQhqxgmAp2iEX5W96gMM=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
