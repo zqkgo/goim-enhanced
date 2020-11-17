@@ -90,3 +90,18 @@ func (s *stat) IncrRoomMsgs() {
 func (s *stat) IncrMidMsgs() {
 	atomic.AddUint64(&s.midMsgs, 1)
 }
+
+func (s *stat) GetOnlines() (hostOnline, tcpOnline, wsOnline int64, roomOnlines map[string]int64, midOnlines map[int64]int64) {
+	s.mu.RLock()
+	roomOnlines = make(map[string]int64)
+	for rid, online := range s.roomOnlines {
+		roomOnlines[rid] = online
+	}
+	midOnlines = make(map[int64]int64)
+	for mid, online := range s.midOnlines {
+		midOnlines[mid] = online
+	}
+	s.mu.RUnlock()
+	hostOnline, tcpOnline, wsOnline = s.hostOnline, s.tcpOnline, s.wsOnline
+	return
+}
