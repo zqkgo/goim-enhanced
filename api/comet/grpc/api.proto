@@ -51,9 +51,9 @@ message RoomsReply {
 message OnlinesReq {}
 
 message OnlinesReply {
-    uint64 hostOnline = 1;
-    map<string, uint64> roomOnlines = 2;
-    map<int64, uint64> midOnlines = 3;
+    int64 hostOnline = 1;
+    map<string, int64> roomOnlines = 2;
+    map<int64, int64> midOnlines = 3;
 }
 
 message MessagesReq {}
