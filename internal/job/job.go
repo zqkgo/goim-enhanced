@@ -40,6 +40,7 @@ func newKafkaSub(c *conf.Kafka) *cluster.Consumer {
 	config := cluster.NewConfig()
 	config.Consumer.Return.Errors = true
 	config.Group.Return.Notifications = true
+	config.Consumer.Offsets.CommitInterval = time.Second * 10
 	consumer, err := cluster.NewConsumer(c.Brokers, c.Group, []string{c.Topic}, config)
 	if err != nil {
 		panic(err)
