@@ -12,7 +12,7 @@ func TestStat(t *testing.T) {
 	for i := 0; i < 10000; i++ {
 		stat.IncrBroadcastMsgs()
 		stat.IncrRoomMsgs()
-		stat.IncrMidMsgs()
+		stat.IncrPushMsgs()
 	}
 	stat.GetAndResetMsgs()
 	if stat.broadcastMsgs != 0 {

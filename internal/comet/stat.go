@@ -17,7 +17,7 @@ type stat struct {
 	midOnlines    map[int64]int64
 	broadcastMsgs uint64
 	roomMsgs      uint64
-	midMsgs       uint64
+	pushMsgs      uint64
 	mu            sync.RWMutex
 	rstTime       time.Time
 }
@@ -104,8 +104,8 @@ func (s *stat) IncrRoomMsgs() {
 	atomic.AddUint64(&s.roomMsgs, 1)
 }
 
-func (s *stat) IncrMidMsgs() {
-	atomic.AddUint64(&s.midMsgs, 1)
+func (s *stat) IncrPushMsgs() {
+	atomic.AddUint64(&s.pushMsgs, 1)
 }
 
 func (s *stat) GetOnlines() (hostOnline, tcpOnline, wsOnline int64, roomOnlines map[string]int64, midOnlines map[int64]int64) {
@@ -135,7 +135,7 @@ func (s *stat) GetAndResetMsgs() []MsgStat {
 		}
 		mid = MsgStat{
 			MsgType: grpc.PushMsg_PUSH,
-			Count:   atomic.LoadUint64(&s.midMsgs),
+			Count:   atomic.LoadUint64(&s.pushMsgs),
 		}
 	)
 	now := time.Now()
@@ -160,5 +160,5 @@ func (s *stat) calSpd(cnt uint64, dur float64) float64 {
 func (s *stat) rstMsgs() {
 	atomic.StoreUint64(&s.broadcastMsgs, 0)
 	atomic.StoreUint64(&s.roomMsgs, 0)
-	atomic.StoreUint64(&s.midMsgs, 0)
+	atomic.StoreUint64(&s.pushMsgs, 0)
 }

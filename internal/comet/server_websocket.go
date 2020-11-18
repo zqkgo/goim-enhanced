@@ -208,6 +208,10 @@ func (s *Server) ServeWebsocket(conn net.Conn, rp, wp *bytes.Pool, tr *xtime.Tim
 	step = 3
 	if p, err = ch.CliProto.Set(); err == nil {
 		if ch.Mid, ch.Key, rid, accepts, hb, err = s.authWebsocket(ctx, ws, p, req.Header.Get("Cookie")); err == nil {
+			if rid != "" {
+				DefaultStat.IncrRoomOnlines(rid)
+			}
+			DefaultStat.IncrMidOnlines(ch.Mid)
 			ch.Watch(accepts...)
 			b = s.Bucket(ch.Key)
 			err = b.Put(rid, ch)
@@ -235,6 +239,8 @@ func (s *Server) ServeWebsocket(conn net.Conn, rp, wp *bytes.Pool, tr *xtime.Tim
 	}
 	// hanshake ok start dispatch goroutine
 	step = 5
+	DefaultStat.IncrHostOnline()
+	DefaultStat.IncrWsOnline()
 	go s.dispatchWebsocket(ws, wp, wb, ch)
 	serverHeartbeat := s.RandServerHearbeat()
 	for {
@@ -298,6 +304,8 @@ func (s *Server) ServeWebsocket(conn net.Conn, rp, wp *bytes.Pool, tr *xtime.Tim
 	if conf.Conf.Debug {
 		log.Infof("websocket disconnected key: %s mid:%d", ch.Key, ch.Mid)
 	}
+	DefaultStat.DecrHostOnline()
+	DefaultStat.DecrWsOnline()
 }
 
 // dispatch accepts connections on the listener and serves requests

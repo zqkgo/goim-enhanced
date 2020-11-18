@@ -127,6 +127,10 @@ func (s *Server) ServeTCP(conn *net.TCPConn, rp, wp *bytes.Pool, tr *xtime.Timer
 	step = 1
 	if p, err = ch.CliProto.Set(); err == nil {
 		if ch.Mid, ch.Key, rid, accepts, hb, err = s.authTCP(ctx, rr, wr, p); err == nil {
+			if rid != "" {
+				DefaultStat.IncrRoomOnlines(rid)
+			}
+			DefaultStat.IncrMidOnlines(ch.Mid)
 			ch.Watch(accepts...)
 			b = s.Bucket(ch.Key)
 			err = b.Put(rid, ch)
@@ -151,6 +155,8 @@ func (s *Server) ServeTCP(conn *net.TCPConn, rp, wp *bytes.Pool, tr *xtime.Timer
 		whitelist.Printf("key: %s[%s] auth\n", ch.Key, rid)
 	}
 	step = 3
+	DefaultStat.IncrHostOnline()
+	DefaultStat.IncrTCPOnline()
 	// hanshake ok start dispatch goroutine
 	go s.dispatchTCP(conn, wr, wp, wb, ch)
 	serverHeartbeat := s.RandServerHearbeat()
@@ -215,6 +221,8 @@ func (s *Server) ServeTCP(conn *net.TCPConn, rp, wp *bytes.Pool, tr *xtime.Timer
 	if conf.Conf.Debug {
 		log.Infof("tcp disconnected key: %s mid: %d", ch.Key, ch.Mid)
 	}
+	DefaultStat.DecrHostOnline()
+	DefaultStat.DecrTCPOnline()
 }
 
 // dispatch accepts connections on the listener and serves requests

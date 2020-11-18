@@ -67,6 +67,7 @@ func (s *server) PushMsg(ctx context.Context, req *pb.PushMsgReq) (reply *pb.Pus
 			if err = channel.Push(req.Proto); err != nil {
 				return
 			}
+			comet.DefaultStat.IncrPushMsgs()
 		}
 	}
 	return &pb.PushMsgReply{}, nil
@@ -87,6 +88,7 @@ func (s *server) Broadcast(ctx context.Context, req *pb.BroadcastReq) (*pb.Broad
 			}
 		}
 	}()
+	comet.DefaultStat.IncrBroadcastMsgs()
 	return &pb.BroadcastReply{}, nil
 }
 
@@ -98,6 +100,7 @@ func (s *server) BroadcastRoom(ctx context.Context, req *pb.BroadcastRoomReq) (*
 	for _, bucket := range s.srv.Buckets() {
 		bucket.BroadcastRoom(req)
 	}
+	comet.DefaultStat.IncrRoomMsgs()
 	return &pb.BroadcastRoomReply{}, nil
 }
 
