@@ -43,7 +43,9 @@ func (s *stat) IncrHostOnline() {
 }
 
 func (s *stat) DecrHostOnline() {
-	atomic.AddInt64(&s.hostOnline, -1)
+	if atomic.LoadInt64(&s.hostOnline) > 0 {
+		atomic.AddInt64(&s.hostOnline, -1)
+	}
 }
 
 func (s *stat) IncrTCPOnline() {
@@ -51,7 +53,9 @@ func (s *stat) IncrTCPOnline() {
 }
 
 func (s *stat) DecrTCPOnline() {
-	atomic.AddInt64(&s.tcpOnline, -1)
+	if atomic.LoadInt64(&s.tcpOnline) > 0 {
+		atomic.AddInt64(&s.tcpOnline, -1)
+	}
 }
 
 func (s *stat) IncrWsOnline() {
@@ -59,7 +63,9 @@ func (s *stat) IncrWsOnline() {
 }
 
 func (s *stat) DecrWsOnline() {
-	atomic.AddInt64(&s.wsOnline, -1)
+	if atomic.LoadInt64(&s.wsOnline) > 0 {
+		atomic.AddInt64(&s.wsOnline, -1)
+	}
 }
 
 func (s *stat) IncrMidOnlines(mid int64) {
@@ -70,7 +76,9 @@ func (s *stat) IncrMidOnlines(mid int64) {
 
 func (s *stat) DecrMidOnlines(mid int64) {
 	s.mu.Lock()
-	s.midOnlines[mid]--
+	if s.midOnlines[mid] > 0 {
+		s.midOnlines[mid]--
+	}
 	s.mu.Unlock()
 }
 
@@ -82,7 +90,9 @@ func (s *stat) IncrRoomOnlines(rid string) {
 
 func (s *stat) DecrRoomOnlines(rid string) {
 	s.mu.Lock()
-	s.roomOnlines[rid]--
+	if s.roomOnlines[rid] > 0 {
+		s.roomOnlines[rid]--
+	}
 	s.mu.Unlock()
 }
 
