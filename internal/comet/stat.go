@@ -6,7 +6,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/zqkgo/goim-enhanced/api/logic/grpc"
+	"github.com/zqkgo/goim-enhanced/api/comet/grpc"
+	logic "github.com/zqkgo/goim-enhanced/api/logic/grpc"
 )
 
 type stat struct {
@@ -20,12 +21,6 @@ type stat struct {
 	pushMsgs      uint64
 	mu            sync.RWMutex
 	rstTime       time.Time
-}
-
-type MsgStat struct {
-	MsgType grpc.PushMsgType
-	Count   uint64
-	Speed   float64
 }
 
 var DefaultStat = NewStat()
@@ -123,18 +118,18 @@ func (s *stat) GetOnlines() (hostOnline, tcpOnline, wsOnline int64, roomOnlines 
 	return
 }
 
-func (s *stat) GetAndResetMsgs() []MsgStat {
+func (s *stat) GetAndResetMsgs() []*grpc.MsgStat {
 	var (
-		broadcast = MsgStat{
-			MsgType: grpc.PushMsgType_BROADCAST,
+		broadcast = &grpc.MsgStat{
+			MsgType: int32(logic.PushMsgType_BROADCAST),
 			Count:   atomic.LoadUint64(&s.broadcastMsgs),
 		}
-		room = MsgStat{
-			MsgType: grpc.PushMsgType_ROOM,
+		room = &grpc.MsgStat{
+			MsgType: int32(logic.PushMsgType_ROOM),
 			Count:   atomic.LoadUint64(&s.roomMsgs),
 		}
-		mid = MsgStat{
-			MsgType: grpc.PushMsgType_PUSH,
+		mid = &grpc.MsgStat{
+			MsgType: int32(logic.PushMsgType_PUSH),
 			Count:   atomic.LoadUint64(&s.pushMsgs),
 		}
 	)
@@ -147,7 +142,7 @@ func (s *stat) GetAndResetMsgs() []MsgStat {
 	// reset
 	s.rstMsgs()
 	s.rstTime = now
-	return []MsgStat{broadcast, room, mid}
+	return []*grpc.MsgStat{broadcast, room, mid}
 }
 
 // round to .2f

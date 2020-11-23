@@ -118,9 +118,20 @@ func (s *server) Rooms(ctx context.Context, req *pb.RoomsReq) (*pb.RoomsReply, e
 }
 
 func (s *server) Onlines(ctx context.Context, req *pb.OnlinesReq) (*pb.OnlinesReply, error) {
-	return nil, nil
+	host, tcp, ws, room, mid := comet.DefaultStat.GetOnlines()
+	reply := &pb.OnlinesReply{
+		HostOnline:  host,
+		TcpOnline:   tcp,
+		WsOnline:    ws,
+		RoomOnlines: room,
+		MidOnlines:  mid,
+	}
+	return reply, nil
 }
 
 func (s *server) Messages(ctx context.Context, req *pb.MessagesReq) (*pb.MessagesReply, error) {
-	return nil, nil
+	stats := comet.DefaultStat.GetAndResetMsgs()
+	return &pb.MessagesReply{
+		MsgStats: stats,
+	}, nil
 }
