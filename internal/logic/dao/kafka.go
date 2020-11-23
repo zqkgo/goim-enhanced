@@ -13,7 +13,7 @@ import (
 // PushMsg push a message to databus.
 func (d *Dao) PushMsg(c context.Context, op int32, server string, keys []string, msg []byte) (err error) {
 	pushMsg := &pb.PushMsg{
-		Type:      pb.PushMsg_PUSH,
+		Type:      pb.PushMsgType_PUSH,
 		Operation: op,
 		Server:    server,
 		Keys:      keys,
@@ -37,7 +37,7 @@ func (d *Dao) PushMsg(c context.Context, op int32, server string, keys []string,
 // BroadcastRoomMsg push a message to databus.
 func (d *Dao) BroadcastRoomMsg(c context.Context, op int32, room string, msg []byte) (err error) {
 	pushMsg := &pb.PushMsg{
-		Type:      pb.PushMsg_ROOM,
+		Type:      pb.PushMsgType_ROOM,
 		Operation: op,
 		Room:      room,
 		Msg:       msg,
@@ -60,7 +60,7 @@ func (d *Dao) BroadcastRoomMsg(c context.Context, op int32, room string, msg []b
 // BroadcastMsg push a message to databus.
 func (d *Dao) BroadcastMsg(c context.Context, op, speed int32, msg []byte) (err error) {
 	pushMsg := &pb.PushMsg{
-		Type:      pb.PushMsg_BROADCAST,
+		Type:      pb.PushMsgType_BROADCAST,
 		Operation: op,
 		Speed:     speed,
 		Msg:       msg,

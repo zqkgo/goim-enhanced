@@ -52,17 +52,22 @@ message OnlinesReq {}
 
 message OnlinesReply {
     int64 hostOnline = 1;
-    map<string, int64> roomOnlines = 2;
-    map<int64, int64> midOnlines = 3;
+    int64 tcpOnline = 2;
+    int64 wsOnline = 3;
+    map<string, int64> roomOnlines = 4;
+    map<int64, int64> midOnlines = 5;
 }
 
 message MessagesReq {}
 
 message MessagesReply {
-    uint64 all = 1;
-    uint64 mid = 2;
-    uint64 room = 3;
-    uint64 broadcast = 4;
+    repeated MsgStat msgStats = 1;
+}
+
+message MsgStat {
+    int32 msgType  = 1;
+    uint64 count = 2;
+    double speed = 3; 
 }
 
 service Comet { 

@@ -23,7 +23,7 @@ type stat struct {
 }
 
 type MsgStat struct {
-	MsgType grpc.PushMsg_Type
+	MsgType grpc.PushMsgType
 	Count   uint64
 	Speed   float64
 }
@@ -126,15 +126,15 @@ func (s *stat) GetOnlines() (hostOnline, tcpOnline, wsOnline int64, roomOnlines 
 func (s *stat) GetAndResetMsgs() []MsgStat {
 	var (
 		broadcast = MsgStat{
-			MsgType: grpc.PushMsg_BROADCAST,
+			MsgType: grpc.PushMsgType_BROADCAST,
 			Count:   atomic.LoadUint64(&s.broadcastMsgs),
 		}
 		room = MsgStat{
-			MsgType: grpc.PushMsg_ROOM,
+			MsgType: grpc.PushMsgType_ROOM,
 			Count:   atomic.LoadUint64(&s.roomMsgs),
 		}
 		mid = MsgStat{
-			MsgType: grpc.PushMsg_PUSH,
+			MsgType: grpc.PushMsgType_PUSH,
 			Count:   atomic.LoadUint64(&s.pushMsgs),
 		}
 	)
