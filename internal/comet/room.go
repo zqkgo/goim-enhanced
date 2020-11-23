@@ -29,6 +29,7 @@ func NewRoom(id string) (r *Room) {
 
 // Put put channel into the room.
 func (r *Room) Put(ch *Channel) (err error) {
+	DefaultStat.IncrRoomOnlines(r.ID)
 	r.rLock.Lock()
 	if !r.drop {
 		if r.next != nil {
@@ -47,6 +48,7 @@ func (r *Room) Put(ch *Channel) (err error) {
 
 // Del delete channel from the room.
 func (r *Room) Del(ch *Channel) bool {
+	DefaultStat.DecrRoomOnlines(r.ID)
 	r.rLock.Lock()
 	if ch.Next != nil {
 		// if not footer

@@ -208,9 +208,6 @@ func (s *Server) ServeWebsocket(conn net.Conn, rp, wp *bytes.Pool, tr *xtime.Tim
 	step = 3
 	if p, err = ch.CliProto.Set(); err == nil {
 		if ch.Mid, ch.Key, rid, accepts, hb, err = s.authWebsocket(ctx, ws, p, req.Header.Get("Cookie")); err == nil {
-			if rid != "" {
-				DefaultStat.IncrRoomOnlines(rid)
-			}
 			DefaultStat.IncrMidOnlines(ch.Mid)
 			ch.Watch(accepts...)
 			b = s.Bucket(ch.Key)

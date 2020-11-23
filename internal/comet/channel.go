@@ -83,5 +83,6 @@ func (c *Channel) Signal() {
 
 // Close close the channel.
 func (c *Channel) Close() {
+	DefaultStat.DecrMidOnlines(c.Mid)
 	c.signal <- grpc.ProtoFinish
 }

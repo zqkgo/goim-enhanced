@@ -127,9 +127,6 @@ func (s *Server) ServeTCP(conn *net.TCPConn, rp, wp *bytes.Pool, tr *xtime.Timer
 	step = 1
 	if p, err = ch.CliProto.Set(); err == nil {
 		if ch.Mid, ch.Key, rid, accepts, hb, err = s.authTCP(ctx, rr, wr, p); err == nil {
-			if rid != "" {
-				DefaultStat.IncrRoomOnlines(rid)
-			}
 			DefaultStat.IncrMidOnlines(ch.Mid)
 			ch.Watch(accepts...)
 			b = s.Bucket(ch.Key)
