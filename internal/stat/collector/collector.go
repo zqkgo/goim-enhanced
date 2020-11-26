@@ -5,7 +5,7 @@ type Collector interface {
 	Collect() error
 	Stop()
 	ReCollect(opts ...Option) error
-	Options() *Options
+	Options() Options
 	String() string
 }
 
