@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"sync"
 	"time"
 
 	"github.com/bilibili/discovery/naming"
@@ -32,6 +33,12 @@ type cometClient struct {
 	client comet.CometClient
 	addr   string
 	ticker *time.Ticker
+
+	wsOnlines   int64
+	tcpOnlines  int64
+	mu          sync.RWMutex
+	roomOnlines map[string]int64
+	midOnlines  map[int64]int64
 
 	ctx    context.Context
 	cancel context.CancelFunc
@@ -80,6 +87,7 @@ func (cc *CometCollector) updateClients(insMap map[string][]*naming.Instance) er
 		return fmt.Errorf("intances is empty")
 	}
 	clients := make(map[string]*cometClient)
+	cc.mu.Lock()
 	for _, in := range ins {
 		if old, ok := cc.clients[in.Hostname]; ok {
 			clients[in.Hostname] = old
@@ -102,6 +110,7 @@ func (cc *CometCollector) updateClients(insMap map[string][]*naming.Instance) er
 		}
 	}
 	cc.clients = clients
+	cc.mu.Unlock()
 	return nil
 }
 
@@ -129,8 +138,10 @@ func (cc *CometCollector) connect(in *naming.Instance) (*cometClient, error) {
 		return nil, fmt.Errorf("invalid grpc address:%v", in.Addrs)
 	}
 	cmt := &cometClient{
-		addr:   grpcAddr,
-		ticker: time.NewTicker(time.Duration(cc.opts.Itvl)),
+		addr:        grpcAddr,
+		ticker:      time.NewTicker(time.Duration(cc.opts.Itvl)),
+		roomOnlines: make(map[string]int64),
+		midOnlines:  make(map[int64]int64),
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Second))
 	defer cancel()
