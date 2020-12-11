@@ -67,18 +67,18 @@ func (cc *CometCollector) String() string {
 func (cc *CometCollector) aggregate() {
 	t := time.NewTicker(100 * time.Millisecond)
 	defer t.Stop()
-	var (
-		wsOnlines   int64
-		tcpOnlines  int64
-		roomOnlines = make(map[string]int64)
-		midOnlines  = make(map[int64]int64)
-	)
 	for {
 		select {
 		case <-cc.ctx.Done():
 			log.Infof("CometCollector.aggregate() stop due to comet collector shutdown")
 			return
 		case <-t.C:
+			var (
+				wsOnlines   int64
+				tcpOnlines  int64
+				roomOnlines = make(map[string]int64)
+				midOnlines  = make(map[int64]int64)
+			)
 			cc.mu.RLock()
 			for _, c := range cc.clients {
 				wsOnlines += c.wsOnlines
