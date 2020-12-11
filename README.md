@@ -2,6 +2,22 @@ Based on [goim v2.0](https://github.com/zqkgo/goim-enhanced), add stats ability 
 
 ----
 
+##### Table of Contents  
+
+* [单机部署](#单机部署)
+  * [启动kafka](#启动kafka)
+  * [启动redis](#启动redis)
+  * [启动注册中心](#启动注册中心)
+  * [启动goim各服务](#启动goim各服务)
+* [建立连接](#建立连接)
+  * [启动模拟HTTP客户端](https://github.com/zqkgo/goim-enhanced#%E5%90%AF%E5%8A%A8%E6%A8%A1%E6%8B%9Fhttp%E5%AE%A2%E6%88%B7%E7%AB%AF)
+  * [使用gRPC客户端](https://github.com/zqkgo/goim-enhanced#%E4%BD%BF%E7%94%A8grpc%E5%AE%A2%E6%88%B7%E7%AB%AF)
+* [发送消息](#发送消息)
+* [使用Prometheus](https://github.com/zqkgo/goim-enhanced#%E4%BD%BF%E7%94%A8prometheus)
+* [使用Grafana](https://github.com/zqkgo/goim-enhanced#%E4%BD%BF%E7%94%A8grafana)
+
+
+
 ## 单机部署
 
 按顺序启动以下组建或服务。
