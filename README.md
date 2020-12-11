@@ -2,8 +2,6 @@ Based on [goim v2.0](https://github.com/zqkgo/goim-enhanced), add stats ability 
 
 ----
 
-##### Table of Contents  
-
 * [单机部署](#单机部署)
   * [启动kafka](#启动kafka)
   * [启动redis](#启动redis)
