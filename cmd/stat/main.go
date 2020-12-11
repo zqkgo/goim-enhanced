@@ -2,15 +2,19 @@ package main
 
 import (
 	"flag"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 
 	log "github.com/golang/glog"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/zqkgo/goim-enhanced/internal/stat/collector"
 	"github.com/zqkgo/goim-enhanced/internal/stat/collector/comet"
 	"github.com/zqkgo/goim-enhanced/internal/stat/conf"
 	"github.com/zqkgo/goim-enhanced/internal/stat/dao"
+	"github.com/zqkgo/goim-enhanced/internal/stat/exporter"
 )
 
 func main() {
@@ -30,6 +34,13 @@ func main() {
 		panic("failed to init comet collectors, err: " + err.Error())
 	}
 	collector.FireCollectors(cc)
+
+	ep := exporter.NewExporter(dao)
+	prometheus.MustRegister(ep)
+	go func() {
+		http.Handle("/metrics", promhttp.Handler())
+		panic(http.ListenAndServe(conf.Conf.Collector.ExporterAddr, nil))
+	}()
 	// signal
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)

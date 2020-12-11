@@ -7,6 +7,7 @@ require (
 	github.com/Shopify/sarama v1.27.2 // indirect
 	github.com/bilibili/discovery v1.0.1
 	github.com/bsm/sarama-cluster v2.1.15+incompatible
+	github.com/garyburd/redigo v1.6.2
 	github.com/gin-gonic/gin v1.3.0
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
@@ -15,12 +16,13 @@ require (
 	github.com/onsi/ginkgo v1.14.2 // indirect
 	github.com/onsi/gomega v1.10.3 // indirect
 	github.com/pierrec/lz4 v2.6.0+incompatible // indirect
+	github.com/prometheus/client_golang v1.8.0
 	github.com/smartystreets/assertions v0.0.0-20180927180507-b2de0cb4f26d // indirect
 	github.com/stretchr/testify v1.6.1
 	github.com/ugorji/go/codec v0.0.0-20190204201341-e444a5086c43 // indirect
 	github.com/zhenjl/cityhash v0.0.0-20131128155616-cdd6a94144ab
 	golang.org/x/net v0.0.0-20201006153459-a7d1128ccaa0
-	google.golang.org/grpc v1.16.0
+	google.golang.org/grpc v1.26.0
 	gopkg.in/Shopify/sarama.v1 v1.19.0
 )
 

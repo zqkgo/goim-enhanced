@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/garyburd/redigo/redis"
 	log "github.com/golang/glog"
 )
 
@@ -17,6 +18,18 @@ func (d *Dao) SetCometHostOnline(c context.Context, host string, ol int64) error
 		return err
 	}
 	return nil
+}
+
+func (d *Dao) GetCometHostOnlines(c context.Context) (map[string]int64, error) {
+	conn := d.redis.Get()
+	defer conn.Close()
+	k := d.cometHostOnlineKey()
+	m, err := redis.Int64Map(conn.Do("HGETALL", k))
+	if err != nil {
+		log.Errorf("conn.Do(HGETALL %s) err(%v)", k, err)
+		return nil, err
+	}
+	return m, nil
 }
 
 func (d *Dao) SetWSOnline(c context.Context, ol int64) error {

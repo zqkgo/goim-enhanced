@@ -65,7 +65,8 @@ type Env struct {
 
 // Collector is collector config.
 type Collector struct {
-	Itvl xtime.Duration
+	Itvl         xtime.Duration
+	ExporterAddr string
 }
 
 // Redis is redis config.

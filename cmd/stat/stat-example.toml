@@ -12,3 +12,4 @@
     expire = "30m"
 [collector]
     itvl = "3s"
+    exporterAddr = ":8888"
