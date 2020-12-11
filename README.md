@@ -32,11 +32,14 @@ go run . -conf=discovery-example.toml
 ### 启动goim各服务
 
 ```
+cd cmd/comet
 go run . -region=sh -zone=sh001 -deploy.env=dev
+cd cmd/logic
 go run . -region=sh -zone=sh001 -deploy.env=dev
+cd cmd/job
 go run . -conf=job-example.toml -region=sh -zone=sh001 -deploy.env=dev
-go run . -conf=stat-example.toml -region=sh -zone=sh001 -deploy.env=dev
-go run . -region=sh -zone=sh001 -deploy.env=dev -logtostderr=true
+cd cmd/stat
+go run . -conf=stat-example.toml -region=sh -zone=sh001 -deploy.env=dev -logtostderr=true
 ```
 
 ## 建立连接
